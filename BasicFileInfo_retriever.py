@@ -13,12 +13,13 @@ def get_rvt_file_version(rvt_file):
             bfi = rvt_ole.openstream("BasicFileInfo")
             file_info_bytes = bfi.read()  # read the stream once
             detected_encoding = detect(file_info_bytes)['encoding']
-            # print(detected_encoding)
+            print(detected_encoding)
             if detected_encoding == "ISO-8859-1" or detected_encoding == "Windows-1252": # concerns BIM360 hosted central models
                 detected_encoding = "utf-16be" #big endian but does not work in all cases, switched to unicode_escape
                 try:
-                    bfi_text = file_info_bytes.decode(detected_encoding, 'replace')
-                except:
+                    bfi_text = file_info_bytes.decode(detected_encoding, 'ignore')
+                    print('try')
+                except: # does not seem to be used that much
                     bfi_text =file_info_bytes.decode("unicode_escape", errors='ignore')
                     bfi_text = ''.join(filter(lambda x: x in printable, bfi_text))
             elif detected_encoding == "ascii":
@@ -128,12 +129,16 @@ def get_rvt_file_version(rvt_file):
                 model_identity_data = "Model Identity: "
             issingleusercloudmodel = search(r"IsSingleUserCloudModel: (.*)", bfi_text)
             if issingleusercloudmodel:
-                issingleusercloudmodel_data = "IsSingleUserCloudModel: " + issingleusercloudmodel.group(1)
+                if "F" in issingleusercloudmodel.group(1):
+                    issingleusercloudmodel_data = "IsSingleUserCloudModel: False"
+                else:
+                    issingleusercloudmodel_data = "IsSingleUserCloudModel: True"
             else:
                 issingleusercloudmodel_data = "IsSingleUserCloudModel: "
             author = search(r"Author: (.*)", bfi_text)
             if author:
                 author_data = "Author: " + author.group(1)
+                print(author.group(1))
             else:
                 author_data = "Author: "
             
