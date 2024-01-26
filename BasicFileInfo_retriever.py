@@ -13,9 +13,20 @@ def get_rvt_file_version(rvt_file):
             bfi = rvt_ole.openstream("BasicFileInfo")
             file_info_bytes = bfi.read()  # read the stream once
             detected_encoding = detect(file_info_bytes)['encoding']
-            if detected_encoding == "ISO-8859-1": # concerns BIM360 hosted central models
-                detected_encoding = "utf-16be" #big endian
-            bfi_text = file_info_bytes.decode(detected_encoding)
+            # print(detected_encoding)
+            if detected_encoding == "ISO-8859-1" or detected_encoding == "Windows-1252": # concerns BIM360 hosted central models
+                detected_encoding = "utf-16be" #big endian but does not work in all cases, switched to unicode_escape
+                try:
+                    bfi_text = file_info_bytes.decode(detected_encoding, 'replace')
+                except:
+                    bfi_text =file_info_bytes.decode("unicode_escape", errors='ignore')
+                    bfi_text = ''.join(filter(lambda x: x in printable, bfi_text))
+            elif detected_encoding == "ascii":
+                detected_encoding = "utf-8"
+                bfi_text = file_info_bytes.decode(detected_encoding, 'replace')
+                bfi_text = ''.join(filter(lambda x: x in printable, bfi_text))
+            else:
+                bfi_text = file_info_bytes.decode(detected_encoding)
             worksharing = search(r"Worksharing: (.*)", bfi_text)
             if worksharing:
                 if "CentralUsername:" in worksharing.group(1):
@@ -141,7 +152,7 @@ if __name__ == "__main__":
         folder = input("!!! Make sure your folder is sync offline before lauching the tool to make things go faster\nFolder path:")
     folder = folder.replace("\\", "\\\\")
     # folder = r"G:\Disques partagés\M11\M11_210629_DIA_DEP\3-MODELS & DRAWINGS\BIM1\LIVE\01_SALLES BLANCHES" # for tests
-    print("\nLooking for BasicFileInfo in {}\n--------------------------------------------------".format(folder))
+    print("\nLooking for BasicFileInfo in {}\n{}".format(folder, "-"*50))
     count = 0
     errors = 0
     list_of_files = []
@@ -157,10 +168,14 @@ if __name__ == "__main__":
     print("Found {} RVT files, I'm on it".format(lgth))
     for rvt_file in list_of_files:
         try:
-            data = data + get_rvt_file_version(rvt_file)
             count += 1
-        except Exception as e :
-            print(e)
+            data = data + "\n#{} {}".format(count, '-'*50) + get_rvt_file_version(rvt_file)
+            left_count = lgth-count+1
+            sign = "|"
+            if left_count%2!=0:
+                sign = "-"
+            print("{} left {}".format(left_count, sign ), end='\r')  # Display the remaining files on one line
+        except Exception as e:
             errors += 1
             data = data + "*"*50+"\nError: " + rvt_file +"\n"
 
@@ -168,3 +183,4 @@ if __name__ == "__main__":
     data = data + "\nTotal Errors: " + str(errors)
     print(data)
     input("Press Enter to continue...")
+
