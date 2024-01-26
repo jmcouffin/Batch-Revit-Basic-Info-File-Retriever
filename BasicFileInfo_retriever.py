@@ -6,6 +6,7 @@ from os import walk, path
 from sys import argv
 from chardet import detect
 
+
 def get_rvt_file_version(rvt_file):
     if path.exists(rvt_file): 
         if isOleFile(rvt_file):
@@ -13,12 +14,11 @@ def get_rvt_file_version(rvt_file):
             bfi = rvt_ole.openstream("BasicFileInfo")
             file_info_bytes = bfi.read()  # read the stream once
             detected_encoding = detect(file_info_bytes)['encoding']
-            print(detected_encoding)
+            # print(detected_encoding)
             if detected_encoding == "ISO-8859-1" or detected_encoding == "Windows-1252": # concerns BIM360 hosted central models
                 detected_encoding = "utf-16be" #big endian but does not work in all cases, switched to unicode_escape
                 try:
                     bfi_text = file_info_bytes.decode(detected_encoding, 'ignore')
-                    print('try')
                 except: # does not seem to be used that much
                     bfi_text =file_info_bytes.decode("unicode_escape", errors='ignore')
                     bfi_text = ''.join(filter(lambda x: x in printable, bfi_text))
@@ -138,7 +138,6 @@ def get_rvt_file_version(rvt_file):
             author = search(r"Author: (.*)", bfi_text)
             if author:
                 author_data = "Author: " + author.group(1)
-                print(author.group(1))
             else:
                 author_data = "Author: "
             
