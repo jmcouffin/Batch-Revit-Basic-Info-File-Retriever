@@ -26,6 +26,6 @@ jobs:
     - name: Release
       uses: ncipollo/release-action@v1.14.0
       with:
-        artifacts: "dist/*.exe" 
+        artifacts: 'dist/*.exe'
         allowUpdates: true
         tag: steps.version.outputs.version
