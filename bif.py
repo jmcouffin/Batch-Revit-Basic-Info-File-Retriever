@@ -25,8 +25,6 @@ from os import walk, path
 from sys import argv
 from chardet import detect
 
-VER = 1.*.*
-
 def get_rvt_file_version(rvt_file):
     if path.exists(rvt_file): 
         if isOleFile(rvt_file):
