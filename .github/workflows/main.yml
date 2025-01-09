@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Generate Semantic Versions
         id: semver
-        uses: ablil/semantic-versionning@main
+        uses: ablil/semantic-versioning@v0.1.0
 
       - name: Print Version
         run: echo "Git version is ${{ steps.semver.outputs.version }}"
@@ -32,7 +32,7 @@ jobs:
       - name: Edit Release
         uses: irongut/EditRelease@v1.2.0
         with:
-          name: "Basic Info File Retriever"
+          name: "Basic Info File Retriever ${{ steps.semver.outputs.version }}"
           replacename: true
       
           
