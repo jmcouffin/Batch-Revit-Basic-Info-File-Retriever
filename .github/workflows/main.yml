@@ -19,5 +19,14 @@ jobs:
 
     - uses: actions/upload-artifact@v4
       with:
-        name: bfi
+        name: basic-info-file-retriever
         path: dist/bif.exe
+    - name: Publish Release (Release)
+      uses: softprops/action-gh-release@v2
+      with:
+
+          name: basic-info-file-retriever
+          draft: false
+          prerelease: false
+          files: dist/bif.exe
+    
