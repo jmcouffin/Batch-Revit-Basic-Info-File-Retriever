@@ -11,7 +11,8 @@ jobs:
     steps:
       - name: Git Version
         id: version
-        uses: codacy/git-version@2.7.1
+        uses: codacy/git-version@2.8.0
+
       - name: Print Version
         run: echo "Git version is ${{ steps.version.outputs.version }}"
 
@@ -26,6 +27,12 @@ jobs:
           icon: 'application.ico'
           artifact: true
           release: true
-          name: 'Basic Info File Retriever v"${{ steps.version.outputs.version }}"'
           tag: ${{ steps.version.outputs.version }}
+
+      - name: Edit Release
+        uses: irongut/EditRelease@v1.2.0
+        with:
+          name: "Basic Info File Retriever"
+          replacename: true
+      
           
