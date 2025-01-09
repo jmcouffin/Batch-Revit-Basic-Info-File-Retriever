@@ -12,7 +12,7 @@ jobs:
       - name: Build and Release
         uses: kentsx/Python2Exe@v1.1.1
         with:
-          main: master
+          main: bfi
           exe_name: 'My Executable'
           icon: 'application.ico'
           artifact: false
