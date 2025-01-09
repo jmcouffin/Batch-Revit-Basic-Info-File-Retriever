@@ -12,10 +12,10 @@ jobs:
       - name: Build and Release
         uses: kentsx/Python2Exe@v1.1.1
         with:
-          main: bfi
+          main: bif
           python_version: 3.12
           pyinstaller_version: 6.11.1
-          exe_name: 'bfi'
+          exe_name: 'bif'
           icon: 'application.ico'
           artifact: true
           release: true
