@@ -21,3 +21,4 @@ jobs:
           artifact: true
           release: true
           allow_updates: true
+          
