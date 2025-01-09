@@ -20,4 +20,5 @@ jobs:
           icon: 'application.ico'
           artifact: true
           release: true
+          version: '1.0.0'
           
