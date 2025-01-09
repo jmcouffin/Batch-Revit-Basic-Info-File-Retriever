@@ -9,6 +9,10 @@ jobs:
   pyinstaller-build:
     runs-on: windows-latest
     steps:
+      - name: Git Version
+        id: version
+        uses: codacy/git-version@2.7.1
+
       - name: Build and Release
         uses: kentsx/Python2Exe@v1.1.1
         with:
@@ -20,5 +24,5 @@ jobs:
           icon: 'application.ico'
           artifact: true
           release: true
-          version: '1.0.0'
+          tag: ${{ steps.version.outputs.version }}
           
