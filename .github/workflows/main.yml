@@ -15,9 +15,9 @@ jobs:
     - name: Package Application
       uses: JackMcKew/pyinstaller-action-linux@main
       with:
-        path: /
+        path: bif.py
 
     - uses: actions/upload-artifact@v4
       with:
         name: bfi
-        path: /
+        path: dist/bif.exe
