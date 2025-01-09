@@ -1,31 +1,22 @@
-name: Package Application with Pyinstaller
+name: Create python Exe to Release
 
-on:
+on: 
   push:
-    branches: master
-  pull_request:
-    branches: master
+    branches:
+      - 'master'
+    paths:
+      - 'bfi.py'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  pyinstaller-build:
+    runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Create Executable
-      uses: sayyid5416/pyinstaller@v1
-      with:
-        python_ver: '3.12'
-        spec: 'bif.spec'
-        requirements: 'requirements.txt'
-        exe_path: './dist'
-        upload_exe_with_name: 'basic-info-file-retriever'
-        options: --onefile
-    - name: Git Version
-      id: version
-      uses: codacy/git-version@2.7.1
-    - name: Release
-      uses: ncipollo/release-action@v1.14.0
-      with:
-        artifacts: 'dist/*.exe'
-        allowUpdates: true
-        tag: steps.version.outputs.version
+      - name: Build and Release
+        uses: kentsx/Python2Exe@v1.1.1
+        with:
+          main: master
+          exe_name: 'My Executable'
+          icon: 'application.ico'
+          artifact: false
+          release: true
+          tag: steps.version.outputs.version
