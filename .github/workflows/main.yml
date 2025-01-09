@@ -20,4 +20,4 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: bfi
-        path: src/dist/linux
+        path: /
