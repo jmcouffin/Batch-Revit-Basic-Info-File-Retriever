@@ -17,5 +17,6 @@ jobs:
         python_ver: '3.12'
         spec: 'bif.spec'
         requirements: 'requirements.txt'
-        upload_exe_with_name: 'bif.exe'
-        options: -F
+        exe_path: './dist'
+        upload_exe_with_name: 'basic-info-file-retriever'
+        options: --onefile
