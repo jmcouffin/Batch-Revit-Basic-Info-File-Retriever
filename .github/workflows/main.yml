@@ -1,0 +1,32 @@
+name: Package Application with Pyinstaller
+
+on:
+  push:
+    branches: master
+  pull_request:
+    branches: master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Package Application
+      uses: JackMcKew/pyinstaller-action-linux@main
+      with:
+        path: bif.py
+        spec: bif.spec
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: basic-info-file-retriever
+        path: dist/bif.exe
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+          files: dist/bfi.exe
+    
