@@ -1,23 +1,23 @@
-name: Create python Exe to Release
+# name: Create python Exe to Release
 
-on: 
-  push:
-    branches:
-      - 'main'
+# on: 
+#   push:
+#     branches:
+#       - 'main'
 
-jobs:
-  pyinstaller-build:
-    runs-on: windows-latest
-    steps:
-      - name: Build and Release
-        uses: kentsx/Python2Exe@v1.1.1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          main: bif
-          python_version: 3.12
-          pyinstaller_version: 6.11.1
-          exe_name: 'bif'
-          icon: 'application.ico'
-          artifact: true
-          release: true
-          tag: 'v1.0.0'
+# jobs:
+#   pyinstaller-build:
+#     runs-on: windows-latest
+#     steps:
+#       - name: Build and Release
+#         uses: kentsx/Python2Exe@v1.1.1
+#         with:
+#           token: ${{ secrets.GITHUB_TOKEN }}
+#           main: bif
+#           python_version: 3.12
+#           pyinstaller_version: 6.11.1
+#           exe_name: 'bif'
+#           icon: 'application.ico'
+#           artifact: true
+#           release: true
+#           tag: 'v1.0.0'
