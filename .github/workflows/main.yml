@@ -21,12 +21,11 @@ jobs:
       with:
         name: basic-info-file-retriever
         path: dist/bif.exe
-    - name: Publish Release (Release)
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Release
       uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags/')
       with:
-
-          name: basic-info-file-retriever
-          draft: false
-          prerelease: false
-          files: dist/bif.exe
+          files: dist/bfi.exe
     
