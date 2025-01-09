@@ -12,8 +12,8 @@ jobs:
       - name: Git Version
         id: version
         uses: codacy/git-version@2.7.1
-        - name: Print Version
-          run: echo "Git version is ${{ steps.version.outputs.version }}"
+      - name: Print Version
+        run: echo "Git version is ${{ steps.version.outputs.version }}"
 
       - name: Build and Release
         uses: kentsx/Python2Exe@v1.1.1
@@ -26,5 +26,6 @@ jobs:
           icon: 'application.ico'
           artifact: true
           release: true
+          name: 'Basic Info File Retriever v"${{ steps.version.outputs.version }}"'
           tag: ${{ steps.version.outputs.version }}
           
