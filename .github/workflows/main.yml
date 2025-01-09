@@ -20,4 +20,5 @@ jobs:
           icon: 'application.ico'
           artifact: true
           release: true
+          version_file_path: version.py
           
