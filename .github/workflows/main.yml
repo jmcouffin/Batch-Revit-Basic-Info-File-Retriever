@@ -35,6 +35,10 @@ jobs:
           release: true
           tag: ${{ needs.versioning.outputs.version }}
 
+  edit_release:
+    needs: versioning
+    runs-on: ubuntu-latest
+    steps:
       - name: Edit Release
         uses: irongut/EditRelease@v1.2.0
         with:
