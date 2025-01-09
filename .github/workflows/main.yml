@@ -6,20 +6,7 @@ on:
       - 'main'
 
 jobs:
-  versioning:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Generate Semantic Versions
-        id: semver
-        uses: ablil/semantic-versioning@v0.1.0
-
-      - name: Print Version
-        run: echo "Git version is ${{ steps.semver.outputs.version }}"
-    outputs:
-      version: ${{ steps.semver.outputs.version }}
-
   pyinstaller-build:
-    needs: versioning
     runs-on: windows-latest
     steps:
       - name: Build and Release
@@ -33,16 +20,4 @@ jobs:
           icon: 'application.ico'
           artifact: true
           release: true
-          tag: ${{ needs.versioning.outputs.version }}
-
-  edit_release:
-    needs: versioning
-    runs-on: ubuntu-latest
-    steps:
-      - name: Edit Release
-        uses: irongut/EditRelease@v1.2.0
-        with:
-          name: "Basic Info File Retriever ${{ needs.versioning.outputs.version }}"
-          replacename: true
-      
-          
+          tag: 'v1.0.0'
