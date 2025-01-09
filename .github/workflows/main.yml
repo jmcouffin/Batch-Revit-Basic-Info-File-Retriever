@@ -17,5 +17,5 @@ jobs:
         python_ver: '3.12'
         spec: 'bif.spec'
         requirements: 'requirements.txt'
-        upload_exe_with_name: 'bif'
+        upload_exe_with_name: 'bif.exe'
         options: -F
