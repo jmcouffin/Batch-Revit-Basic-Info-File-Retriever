@@ -12,6 +12,7 @@ jobs:
       - name: Build and Release
         uses: kentsx/Python2Exe@v1.1.1
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           main: bif
           python_version: 3.12
           pyinstaller_version: 6.11.1
@@ -19,3 +20,4 @@ jobs:
           icon: 'application.ico'
           artifact: true
           release: true
+          allow_updates: true
