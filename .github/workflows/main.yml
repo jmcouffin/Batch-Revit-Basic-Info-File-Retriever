@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - 'master'
-    paths:
-      - 'bfi.py'
 
 jobs:
   pyinstaller-build:
