@@ -6,8 +6,8 @@ on:
       - 'master'
 
 jobs:
-  pyinstaller-build:
-    runs-on: windows-latest
+  versioning:
+    runs-on: ubuntu-latest
     steps:
       - name: Generate Semantic Versions
         id: semver
@@ -15,7 +15,13 @@ jobs:
 
       - name: Print Version
         run: echo "Git version is ${{ steps.semver.outputs.version }}"
+    outputs:
+      version: ${{ steps.semver.outputs.version }}
 
+  pyinstaller-build:
+    needs: versioning
+    runs-on: windows-latest
+    steps:
       - name: Build and Release
         uses: kentsx/Python2Exe@v1.1.1
         with:
@@ -27,12 +33,12 @@ jobs:
           icon: 'application.ico'
           artifact: true
           release: true
-          tag: ${{ steps.semver.outputs.version }}
+          tag: ${{ needs.versioning.outputs.version }}
 
       - name: Edit Release
         uses: irongut/EditRelease@v1.2.0
         with:
-          name: "Basic Info File Retriever ${{ steps.semver.outputs.version }}"
+          name: "Basic Info File Retriever ${{ needs.versioning.outputs.version }}"
           replacename: true
       
           
