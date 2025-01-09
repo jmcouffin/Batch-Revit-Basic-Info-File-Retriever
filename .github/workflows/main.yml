@@ -20,8 +20,12 @@ jobs:
         exe_path: './dist'
         upload_exe_with_name: 'basic-info-file-retriever'
         options: --onefile
+    - name: Git Version
+      id: version
+      uses: codacy/git-version@2.7.1
     - name: Release
       uses: ncipollo/release-action@v1.14.0
       with:
         artifacts: "${{ inputs.dist }}/*.exe" 
         allowUpdates: true
+        tag: steps.version.outputs.version
