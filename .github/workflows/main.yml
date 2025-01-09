@@ -3,7 +3,7 @@ name: Create python Exe to Release
 on: 
   push:
     branches:
-      - 'master'
+      - 'main'
 
 jobs:
   versioning:
